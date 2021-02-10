@@ -12,6 +12,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
 } from "react-native";
+import SubmitButton from '../components/SubmitButton';
 
 export default function Home() {
   const ref = useRef(null);
@@ -71,7 +72,7 @@ export default function Home() {
 
         <View style={styles.box}>
           <TextInput
-            onChange={(event) => getUserInput(event)}
+             onChange={(event) => getUserInput(event)}
             onFocus={() => setDisplay(false)}
             style={styles.input}
           ></TextInput>
@@ -79,8 +80,9 @@ export default function Home() {
             onPress={onPress}
             style={styles.appButtonContainer}
           >
-            <Text style={styles.buttonText}>Un avatar au hasard</Text>
+      
           </TouchableOpacity>
+          <SubmitButton text={"Choisir un autre robot'"} onPress={onPress}/>
         </View>
       </View>
     </SafeAreaView>
@@ -126,22 +128,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     opacity: 0.8,
   },
-  buttonText: {
-    fontSize: 16,
-    color: "#CBD4C2",
-    textTransform: "uppercase",
-  },
-  appButtonContainer: {
-    height: 60,
-    justifyContent: "center",
-    alignItems: "center",
-    elevation: 1,
-    backgroundColor: "#0E6BA8",
-    borderRadius: 8,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    alignSelf: "center",
-    marginBottom: 40,
-    marginTop: 65,
-  },
+
 });
