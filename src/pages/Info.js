@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useState, useRef } from "react";
 import {
   StyleSheet,
@@ -79,33 +78,6 @@ export default function Info() {
             nisi ut, finibus arcu. Curabitur varius lorem vehicula est convallis
             porta. Aliquam
           </Text>
-          <Text style={styles.text}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vehicula
-            elit eu elit eleifend, a elementum justo auctor. Nullam vehicula
-            varius erat, in laoreet leo interdum ut. Praesent eu erat massa.
-            Curabitur fringilla tincidunt justo a fringilla. Aenean porttitor
-            interdum enim id sodales. Aenean eget lectus ut arcu euismod
-            pellentesque. Maecenas fringilla congue malesuada. Donec pretium
-            nunc id posuere aliquam. Cras bibendum sapien quis odio lacinia
-            dignissim. Curabitur fermentum dapibus metus, a tincidunt magna
-            vestibulum eu. Nunc et molestie felis. Maecenas a mi egestas, semper
-            nisi ut, finibus arcu. Curabitur varius lorem vehicula est convallis
-            porta. Aliquam
-          </Text>
-          <Text style={styles.text}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vehicula
-            elit eu elit eleifend, a elementum justo auctor. Nullam vehicula
-            varius erat, in laoreet leo interdum ut. Praesent eu erat massa.
-            Curabitur fringilla tincidunt justo a fringilla. Aenean porttitor
-            interdum enim id sodales. Aenean eget lectus ut arcu euismod
-            pellentesque. Maecenas fringilla congue malesuada. Donec pretium
-            nunc id posuere aliquam. Cras bibendum sapien quis odio lacinia
-            dignissim. Curabitur fermentum dapibus metus, a tincidunt magna
-            vestibulum eu. Nunc et molestie felis. Maecenas a mi egestas, semper
-            nisi ut, finibus arcu. Curabitur varius lorem vehicula est convallis
-            porta. Aliquam
-          </Text>
-        <StatusBar style="auto" />
       </ScrollView>
     </SafeAreaView>
   );

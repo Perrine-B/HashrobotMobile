@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 
-export default function SubmitButton(props) {
+export default function TagButton(props) {
   const { text, onPress } = props;
 
   return (
@@ -13,27 +13,25 @@ export default function SubmitButton(props) {
 }
 
 const styles = StyleSheet.create({
+  appButtonContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 1,
+    backgroundColor: "#212922",
+    borderRadius: 8,
+    height: 45,
+    width: 60,
+    margin: 4,
+  },
   buttonText: {
     fontSize: 16,
     color: "#CBD4C2",
     textTransform: "uppercase",
   },
-  appButtonContainer: {
-    height: 60,
-    justifyContent: "center",
-    alignItems: "center",
-    elevation: 1,
-    backgroundColor: "#0E6BA8",
-    borderRadius: 8,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    alignSelf: "center",
-    marginBottom: 40,
-    marginTop: 65,
-  },
 });
 
-SubmitButton.propTypes = {
+TagButton.propTypes = {
   text: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
 };

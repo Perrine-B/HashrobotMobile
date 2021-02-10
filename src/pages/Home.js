@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
@@ -7,18 +6,15 @@ import {
   Image,
   SafeAreaView,
   Dimensions,
-  TextInput,
-  TouchableOpacity,
   KeyboardAvoidingView,
-  Keyboard,
 } from "react-native";
-import SubmitButton from '../components/SubmitButton';
+import SubmitButton from "../components/SubmitButton";
 
 export default function Home() {
   const ref = useRef(null);
   const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
   const [display, setDisplay] = useState(true);
-  const [robot, setRobot] = useState('')
+  const [robot, setRobot] = useState("");
 
   const onPress = () => {
     console.log("banane");
@@ -26,19 +22,11 @@ export default function Home() {
     ref?.current?.scrollTo({ x: 0, y: 0, animated: true });
   };
 
-  useEffect(() => {  
+  useEffect(() => {});
 
-
-
- });
-
- function RobotAvatar(props) {
-
-  return (
-    <Image source={{}}></Image>
-  )
-
- }
+  function RobotAvatar(props) {
+    return <Image source={{}}></Image>;
+  }
 
   const getUserInput = (e) => {
     console.log(e.target.value);
@@ -46,8 +34,6 @@ export default function Home() {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <StatusBar style="auto" />
-
       <View
         style={{ height: windowHeight, ...styles.home }}
         alwaysBounceVertical={true}
@@ -71,18 +57,7 @@ export default function Home() {
         </KeyboardAvoidingView>
 
         <View style={styles.box}>
-          <TextInput
-             onChange={(event) => getUserInput(event)}
-            onFocus={() => setDisplay(false)}
-            style={styles.input}
-          ></TextInput>
-          <TouchableOpacity
-            onPress={onPress}
-            style={styles.appButtonContainer}
-          >
-      
-          </TouchableOpacity>
-          <SubmitButton text={"Choisir un autre robot'"} onPress={onPress}/>
+          <SubmitButton text={"Choisir un autre robot'"} onPress={onPress} />
         </View>
       </View>
     </SafeAreaView>
@@ -119,14 +94,4 @@ const styles = StyleSheet.create({
   text: {
     paddingHorizontal: 20,
   },
-  input: {
-    backgroundColor: "white",
-    width: 300,
-    height: 40,
-    borderRadius: 5,
-    borderColor: "#0E6BA8",
-    borderWidth: 1,
-    opacity: 0.8,
-  },
-
 });

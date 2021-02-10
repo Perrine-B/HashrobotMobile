@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Switch } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MeteorIcon from "./assets/meteor.svg";
@@ -13,7 +14,9 @@ export default function App() {
 
 
   return (
+
     <NavigationContainer>
+          <StatusBar style="auto" />
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused }) => {

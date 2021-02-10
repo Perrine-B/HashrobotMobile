@@ -12,6 +12,8 @@ import {
   Switch,
   TextInput,
 } from "react-native";
+import SubmitButton from "../components/SubmitButton";
+import TagButton from "../components/TagButton";
 
 export default function Article() {
   const isImageSelected = useState(false);
@@ -64,26 +66,9 @@ export default function Article() {
               Dimensions
             </Text>
             <View style={styles.buttons}>
-              <TouchableOpacity
-                onPress={onPress}
-                style={styles.appButtonContainer}
-              >
-                <Text style={styles.appButtonText}>200</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={onPress}
-                style={styles.appButtonContainer}
-              >
-                <Text style={styles.appButtonText}>300</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={onPress}
-                style={styles.appButtonContainer}
-              >
-                <Text style={styles.appButtonText}>500</Text>
-              </TouchableOpacity>
+              <TagButton text={"200"} onPress={onPress} />
+              <TagButton text={"300"} onPress={onPress} />
+              <TagButton text={"500"} onPress={onPress} />
             </View>
           </View>
 
@@ -93,7 +78,7 @@ export default function Article() {
             </Text>
             <View style={styles.buttons}>
               <Switch
-                trackColor={{ false: "#CBD4C2", true: "#212922"}}
+                trackColor={{ false: "#CBD4C2", true: "#212922" }}
                 thumbColor={true ? "#212922" : "#CBD4C2"}
                 ios_backgroundColor="#3e3e3e"
                 //onValueChange={toggleSwitch}
@@ -107,27 +92,23 @@ export default function Article() {
               Format
             </Text>
             <View style={styles.buttons}>
-              <TouchableOpacity
-                onPress={onPress}
-                style={styles.appButtonContainer}
-              >
-                <Text style={styles.appButtonText}>PNG</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={onPress}
-                style={styles.appButtonContainer}
-              >
-                <Text style={styles.appButtonText}>JPG</Text>
-              </TouchableOpacity>
+              <TagButton text={"jpg"} onPress={onPress} />
+              <TagButton text={"png"} onPress={onPress} />
             </View>
           </View>
         </View>
         {/** End Choices section */}
         {/** Submit section */}
         <View style={styles.submitSection}>
-          <TouchableOpacity onPress={onPress} style={styles.submitButton}>
-            <Text style={styles.appButtonText}>Générer mon avatar</Text>
-          </TouchableOpacity>
+        <Text style={{ ...styles.title, ...styles.choiceTitle }}>
+              Saisissez un texte 
+            </Text>
+          <TextInput
+            onChange={(event) => getUserInput(event)}
+            onFocus={() => setDisplay(false)}
+            style={styles.input}
+          />
+          <SubmitButton text={"Générer un robot"} onPress={onPress} />
         </View>
         {/** End Submit section */}
       </ScrollView>
@@ -184,39 +165,17 @@ const styles = StyleSheet.create({
   buttons: {
     flexDirection: "row",
   },
-  appButtonContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    elevation: 1,
-    backgroundColor: "#212922",
-    borderRadius: 8,
-    height: 45,
-    width: 60,
-    margin: 4,
-  },
-  appButtonText: {
-    fontSize: 16,
-    color: "#CBD4C2",
-    textTransform: "uppercase",
-  },
   submitSection: {
     marginTop: 20,
     justifyContent: "center",
   },
-  submitButton: {
-    height: 60,
-    width: "80%",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    elevation: 1,
-    backgroundColor: "#0E6BA8",
-    borderRadius: 8,
-    paddingVertical: 3,
-    paddingHorizontal: 10,
-    alignSelf: "center",
-    marginBottom: 40,
-    marginTop: 20
+  input: {
+    backgroundColor: "white",
+    width: 300,
+    height: 40,
+    borderRadius: 5,
+    borderColor: "#0E6BA8",
+    borderWidth: 1,
+    alignSelf: 'center'
   },
 });
