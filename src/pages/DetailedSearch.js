@@ -9,6 +9,7 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
+  KeyboardAvoidingView,
   Switch,
   TextInput,
 } from "react-native";
@@ -60,6 +61,11 @@ export default function Article() {
         </View>
         {/** End Image box */}
         {/** Choices section */}
+        <KeyboardAvoidingView
+          contentContainerStyle={{ display:'none' }}
+          //enabled={display}
+          behavior="position"
+        >
         <View style={styles.choicesSection}>
           <View style={styles.choice}>
             <Text style={{ ...styles.title, ...styles.choiceTitle }}>
@@ -97,19 +103,22 @@ export default function Article() {
             </View>
           </View>
         </View>
+        </KeyboardAvoidingView>
         {/** End Choices section */}
         {/** Submit section */}
+   
         <View style={styles.submitSection}>
         <Text style={{ ...styles.title, ...styles.choiceTitle }}>
               Saisissez un texte 
             </Text>
           <TextInput
-            onChange={(event) => getUserInput(event)}
-            onFocus={() => setDisplay(false)}
+            //onChange={(event) => getUserInput(event)}
+            //onFocus={() => setDisplay(false)}
             style={styles.input}
           />
           <SubmitButton text={"Générer un robot"} onPress={onPress} />
         </View>
+ 
         {/** End Submit section */}
       </ScrollView>
     </SafeAreaView>

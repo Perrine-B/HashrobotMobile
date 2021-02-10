@@ -42,20 +42,13 @@ export default function Home() {
         <Text style={styles.title}>
           Avatar de robots destructeur de mondes simulator{" "}
         </Text>
-
-        <KeyboardAvoidingView
-          contentContainerStyle={{ height: 120, paddingLeft: 10 }}
-          enabled={display}
-          behavior="position"
-        >
+      
           <View>
             <Image
               style={styles.image}
               source={require("../../assets/robot.jpg")}
             />
           </View>
-        </KeyboardAvoidingView>
-
         <View style={styles.box}>
           <SubmitButton text={"Choisir un autre robot'"} onPress={onPress} />
         </View>
