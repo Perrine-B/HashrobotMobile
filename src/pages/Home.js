@@ -8,7 +8,9 @@ import {
   Dimensions,
 } from "react-native";
 import SubmitButton from "../components/SubmitButton";
+import TagButton from "../components/TagButton";
 import API from "../utils/api";
+import DownloadIcon from "../../assets/download";
 
 export default function Home() {
   const ref = useRef(null);
@@ -35,47 +37,14 @@ export default function Home() {
   }, []);
 
   const onPress = () => {
-    console.log("yop");
-    function strRandom(o) {
-      var a = 10,
-        b = "abcdefghijklmnopqrstuvwxyz",
-        c = "",
-        d = 0,
-        e = "" + b;
-      if (o) {
-        if (o.startsWithLowerCase) {
-          c = b[Math.floor(Math.random() * b.length)];
-          d = 1;
-        }
-        if (o.length) {
-          a = o.length;
-        }
-        if (o.includeUpperCase) {
-          e += b.toUpperCase();
-        }
-        if (o.includeNumbers) {
-          e += "1234567890";
-        }
-      }
-      for (; d < a; d++) {
-        c += e[Math.floor(Math.random() * e.length)];
-      }
-      return c;
-    }
     // générer une chaine de caractère aléatoire
-    const randomChars = strRandom({
-      includeUpperCase: false,
-      includeNumbers: false,
-      length: 5,
-      startsWithLowerCase: true,
-    });
-
+    const randomChars = Math.random().toString(36).substring(7);
+    // générer un chiffre entre 1 & 4
     const randomSet = Math.floor(Math.random() * 4) + 1;
 
     API.get(`/${randomChars}/?set=set${randomSet}`)
       .then(function (response) {
         // handle success
-
         if (response.status === 200) {
           console.log("onpress", response.status);
           setRobot(`https://robohash.org/${randomChars}/?set=set${randomSet}`);
@@ -101,11 +70,19 @@ export default function Home() {
         ref={ref}
       >
         <Text style={styles.title}>
-          Avatar de robots destructeur de mondes simulator{" "}
+          Générateur d'avatar de robots destructeurs de mondes
         </Text>
         <View>{robot !== "" && <Image source={currentRobot} />}</View>
-        <View style={styles.box}>
-          <SubmitButton text={"Choisir un autre robot'"} onPress={onPress} />
+        <View style={{ width: windowWidth, ...styles.buttons }}>
+          <SubmitButton
+            style={styles.test}
+            text={"Choisir un autre robot"}
+            onPress={onPress}
+          />
+          <TagButton
+            onPress={onPress}
+            icon={<DownloadIcon style={styles.icon} />}
+          />
         </View>
       </View>
     </SafeAreaView>
@@ -116,24 +93,27 @@ export default function Home() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "center",
     backgroundColor: "white",
+    paddingTop: 40,
   },
   home: {
     flexDirection: "column",
-    justifyContent: "space-evenly",
     alignItems: "center",
   },
-  box: {
-    flexDirection: "column",
+  buttons: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "flex-end",
+    paddingTop: 60
+  },
+  icon: {
+    color: "#CBD4C2",
   },
   title: {
     color: "#0E6BA8",
-    fontSize: 22,
+    fontSize: 30,
     fontWeight: "bold",
     textAlign: "center",
-    paddingBottom: 20,
+    paddingBottom: 40,
   },
 });

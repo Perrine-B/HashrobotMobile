@@ -3,17 +3,18 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 
 export default function TagButton(props) {
-  const { text, onPress } = props;
+  const { text, onPress, icon } = props;
 
   return (
-    <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
-      <Text style={styles.buttonText}>{text}</Text>
+    <TouchableOpacity onPress={onPress} style={styles.buttonContainer}>
+      {icon !== null && icon}
+      {icon === null && <Text style={styles.buttonText}>{text}</Text>}
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  appButtonContainer: {
+  buttonContainer: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -23,6 +24,7 @@ const styles = StyleSheet.create({
     height: 45,
     width: 60,
     margin: 4,
+    padding: 10
   },
   buttonText: {
     fontSize: 16,
@@ -31,7 +33,13 @@ const styles = StyleSheet.create({
   },
 });
 
+TagButton.defaultProps = {
+  text: '',
+  icon: null,
+};
+
 TagButton.propTypes = {
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
   onPress: PropTypes.func.isRequired,
+  icon: PropTypes.node,
 };

@@ -42,7 +42,7 @@ export default function App() {
         }}
       >
         <Tab.Screen name="Accueil" component={Home} />
-        <Tab.Screen name="Générateur" component={DetailedSearch} />
+        <Tab.Screen name="Avancé" component={DetailedSearch} />
         <Tab.Screen name="Infos" component={Info} />
       </Tab.Navigator>
     </NavigationContainer>
