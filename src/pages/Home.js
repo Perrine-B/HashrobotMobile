@@ -6,9 +6,9 @@ import {
   Image,
   SafeAreaView,
   Dimensions,
-  KeyboardAvoidingView,
 } from "react-native";
 import SubmitButton from "../components/SubmitButton";
+import API from "../utils/api";
 
 export default function Home() {
   const ref = useRef(null);
@@ -16,20 +16,81 @@ export default function Home() {
   const [display, setDisplay] = useState(true);
   const [robot, setRobot] = useState("");
 
+  useEffect(() => {
+    //
+    if (robot === "") {
+      API.get("/hellocesi/?set=set4")
+        .then(function (response) {
+          // handle success
+          console.log(response.status);
+          if (response.status === 200) {
+            setRobot("https://robohash.org/hellocesi/?set=set4");
+          }
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        });
+    }
+  }, []);
+
   const onPress = () => {
-    console.log("banane");
-    // Scroll to the top of the screen when the button is clicked
-    ref?.current?.scrollTo({ x: 0, y: 0, animated: true });
+    console.log("yop");
+    function strRandom(o) {
+      var a = 10,
+        b = "abcdefghijklmnopqrstuvwxyz",
+        c = "",
+        d = 0,
+        e = "" + b;
+      if (o) {
+        if (o.startsWithLowerCase) {
+          c = b[Math.floor(Math.random() * b.length)];
+          d = 1;
+        }
+        if (o.length) {
+          a = o.length;
+        }
+        if (o.includeUpperCase) {
+          e += b.toUpperCase();
+        }
+        if (o.includeNumbers) {
+          e += "1234567890";
+        }
+      }
+      for (; d < a; d++) {
+        c += e[Math.floor(Math.random() * e.length)];
+      }
+      return c;
+    }
+    // générer une chaine de caractère aléatoire
+    const randomChars = strRandom({
+      includeUpperCase: false,
+      includeNumbers: false,
+      length: 5,
+      startsWithLowerCase: true,
+    });
+
+    const randomSet = Math.floor(Math.random() * 4) + 1;
+
+    API.get(`/${randomChars}/?set=set${randomSet}`)
+      .then(function (response) {
+        // handle success
+
+        if (response.status === 200) {
+          console.log("onpress", response.status);
+          setRobot(`https://robohash.org/${randomChars}/?set=set${randomSet}`);
+        }
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      });
   };
 
-  useEffect(() => {});
-
-  function RobotAvatar(props) {
-    return <Image source={{}}></Image>;
-  }
-
-  const getUserInput = (e) => {
-    console.log(e.target.value);
+  const currentRobot = {
+    uri: robot,
+    width: 200,
+    height: 200,
   };
 
   return (
@@ -42,13 +103,7 @@ export default function Home() {
         <Text style={styles.title}>
           Avatar de robots destructeur de mondes simulator{" "}
         </Text>
-      
-          <View>
-            <Image
-              style={styles.image}
-              source={require("../../assets/robot.jpg")}
-            />
-          </View>
+        <View>{robot !== "" && <Image source={currentRobot} />}</View>
         <View style={styles.box}>
           <SubmitButton text={"Choisir un autre robot'"} onPress={onPress} />
         </View>
@@ -61,30 +116,24 @@ export default function Home() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: "center",
-    height: "100%",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
     backgroundColor: "white",
-    paddingTop: 30,
   },
   home: {
     flexDirection: "column",
     justifyContent: "space-evenly",
     alignItems: "center",
   },
-  image: {
-    height: 300,
-  },
   box: {
     flexDirection: "column",
   },
   title: {
     color: "#0E6BA8",
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: "bold",
-    paddingTop: 10,
     textAlign: "center",
-  },
-  text: {
-    paddingHorizontal: 20,
+    paddingBottom: 20,
   },
 });
