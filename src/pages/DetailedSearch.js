@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -15,8 +14,10 @@ import {
 } from "react-native";
 import SubmitButton from "../components/SubmitButton";
 import TagButton from "../components/TagButton";
+import Avatar from "../components/Avatar";
 
-export default function Article() {
+export default function Article(props) {
+  const { robot } = props;
   const isImageSelected = useState(false);
 
   const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
@@ -29,7 +30,7 @@ export default function Article() {
   return (
     <SafeAreaView style={styles.screen}>
       <ScrollView alwaysBounceVertical={true}>
-        <StatusBar style="auto" />
+        <Avatar url={robot} />
         {/** Image box */}
         <View style={styles.imageSection}></View>
         <Text style={styles.title}>Choisissez un style</Text>
@@ -101,9 +102,9 @@ export default function Article() {
         {/** End Choices section */}
         {/** Submit section */}
         <View style={styles.submitSection}>
-        <Text style={{ ...styles.title, ...styles.choiceTitle }}>
-              Saisissez un texte 
-            </Text>
+          <Text style={{ ...styles.title, ...styles.choiceTitle }}>
+            Saisissez un texte
+          </Text>
           <TextInput
             //onChange={(event) => getUserInput(event)}
             //onFocus={() => setDisplay(false)}
@@ -111,7 +112,7 @@ export default function Article() {
           />
           <SubmitButton text={"Générer un robot"} onPress={onPress} />
         </View>
- 
+
         {/** End Submit section */}
       </ScrollView>
     </SafeAreaView>
@@ -178,6 +179,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: "#0E6BA8",
     borderWidth: 1,
-    alignSelf: 'center'
+    alignSelf: "center",
   },
 });

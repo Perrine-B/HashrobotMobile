@@ -1,66 +1,26 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   StyleSheet,
   Text,
   View,
-  Image,
   SafeAreaView,
   Dimensions,
+  ActivityIndicator,
 } from "react-native";
 import SubmitButton from "../components/SubmitButton";
 import TagButton from "../components/TagButton";
-import API from "../utils/api";
+import PropTypes from "prop-types";
 import DownloadIcon from "../../assets/download";
+import Avatar from "../components/Avatar";
 
-export default function Home() {
+export default function Home(props) {
+  const { robot, getRandomAvatar, loader } = props;
   const ref = useRef(null);
   const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
-  const [display, setDisplay] = useState(true);
-  const [robot, setRobot] = useState("");
 
   useEffect(() => {
     //
-    if (robot === "") {
-      API.get("/hellocesi/?set=set4")
-        .then(function (response) {
-          // handle success
-          console.log(response.status);
-          if (response.status === 200) {
-            setRobot("https://robohash.org/hellocesi/?set=set4");
-          }
-        })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-        });
-    }
   }, []);
-
-  const onPress = () => {
-    // générer une chaine de caractère aléatoire
-    const randomChars = Math.random().toString(36).substring(7);
-    // générer un chiffre entre 1 & 4
-    const randomSet = Math.floor(Math.random() * 4) + 1;
-
-    API.get(`/${randomChars}/?set=set${randomSet}`)
-      .then(function (response) {
-        // handle success
-        if (response.status === 200) {
-          console.log("onpress", response.status);
-          setRobot(`https://robohash.org/${randomChars}/?set=set${randomSet}`);
-        }
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      });
-  };
-
-  const currentRobot = {
-    uri: robot,
-    width: 200,
-    height: 200,
-  };
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -72,15 +32,21 @@ export default function Home() {
         <Text style={styles.title}>
           Générateur d'avatar de robots destructeurs de mondes
         </Text>
-        <View>{robot !== "" && <Image source={currentRobot} />}</View>
+
+        {!loader && robot !== "" ? (
+          <Avatar url={robot} />
+        ) : (
+          <ActivityIndicator size="small" color="#0000ff" />
+        )}
+
         <View style={{ width: windowWidth, ...styles.buttons }}>
           <SubmitButton
             style={styles.test}
             text={"Choisir un autre robot"}
-            onPress={onPress}
+            onPress={getRandomAvatar}
           />
           <TagButton
-            onPress={onPress}
+            //onPress={onPress}
             icon={<DownloadIcon style={styles.icon} />}
           />
         </View>
@@ -104,7 +70,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "flex-end",
-    paddingTop: 60
+    paddingTop: 60,
   },
   icon: {
     color: "#CBD4C2",
@@ -117,3 +83,8 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
 });
+
+Avatar.propTypes = {
+  robot: PropTypes.string.isRequired,
+  getRandomAvatar: PropTypes.func.isRequired,
+};
