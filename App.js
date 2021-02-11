@@ -3,6 +3,7 @@ import { StyleSheet, Switch } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import MeteorIcon from "./assets/meteor.svg";
 import MoonIcon from "./assets/moon.svg";
 import DetailedSearch from "./src/pages/DetailedSearch";
@@ -11,7 +12,7 @@ import Home from "./src/pages/Home";
 import Info from "./src/pages/Info";
 
 export default function App() {
-  const Tab = createBottomTabNavigator();
+  const Tab = createMaterialTopTabNavigator();
   const [robot, setRobot] = useState("");
   const [loader, setLoader] = useState(false);
 
