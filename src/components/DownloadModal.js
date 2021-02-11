@@ -1,10 +1,30 @@
-import React, { useState } from "react";
-import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
-import Avatar from '../components/Avatar';
+import React, { useState, useEffect } from "react";
+import {
+  Alert,
+  Modal,
+  StyleSheet,
+  Text,
+  Pressable,
+  View,
+  ActivityIndicator,
+} from "react-native";
+import Avatar from "../components/Avatar";
 
 export default function DownloadModal(props) {
-    const {robot} = props;
+  const {
+    robot,
+    downloadImage,
+    confirmDownload,
+    resetConfirmation,
+    loader,
+  } = props;
   const [modalVisible, setModalVisible] = useState(false);
+  const [isFileDownloaded, setIsFileDownloaded] = useState("");
+
+  const handleDownload = () => {
+    downloadImage();
+  };
+
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -12,28 +32,53 @@ export default function DownloadModal(props) {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
           setModalVisible(!modalVisible);
         }}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-          <Text style={styles.modalText}>Télécharger l'avatar ?</Text>
-              <Avatar style={styles.avatar} url={robot} format={70}></Avatar>
+            <Text style={styles.modalText}>Télécharger l'avatar ?</Text>
+            <Avatar style={styles.avatar} url={robot} format={70}></Avatar>
+
+            {!loader ? (
               <View style={styles.buttonSection}>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.textStyle}>Annuler</Text>
-            </Pressable>
-            <Pressable
-              style={[styles.button, styles.buttonConfirm]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.textStyle}>Confirmer</Text>
-            </Pressable>
-            </View>
+                <Pressable
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => setModalVisible(!modalVisible)}
+                >
+                  <Text style={styles.textStyle}>Annuler</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.button, styles.buttonConfirm]}
+                  onPress={() => handleDownload()}
+                >
+                  <Text style={styles.textStyle}>Confirmer</Text>
+                </Pressable>
+              </View>
+            ) : (
+              <ActivityIndicator
+                style={{ height: 200 }}
+                size="small"
+                color="#A2AA39"
+              />
+            )}
+            {isFileDownloaded ? (
+              <View style={styles.buttonSection}>
+                <Text style={styles.textStyle}>Telecharchement terminé</Text>
+                <Pressable
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => setModalVisible(!modalVisible)}
+                >
+                  <Text style={styles.textStyle}>Annuler</Text>
+                </Pressable>
+              </View>
+            ) : (
+              <ActivityIndicator
+                style={{ height: 200 }}
+                size="small"
+                color="#A2AA39"
+              />
+            )}
           </View>
         </View>
       </Modal>
@@ -53,14 +98,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 22,
-
   },
   modalView: {
     margin: 20,
     backgroundColor: "white",
     borderRadius: 20,
     padding: 25,
-    justifyContent: 'space-evenly',
+    justifyContent: "space-evenly",
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -73,8 +117,8 @@ const styles = StyleSheet.create({
     width: 300,
     height: 400,
   },
-  buttonSection:{
-    flexDirection: 'row'
+  buttonSection: {
+    flexDirection: "row",
   },
   button: {
     borderRadius: 20,
@@ -93,12 +137,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-  buttonConfirm:{
-    backgroundColor: '#0E6BA8'
+  buttonConfirm: {
+    backgroundColor: "#0E6BA8",
   },
   modalText: {
     marginBottom: 15,
     textAlign: "center",
   },
 });
-

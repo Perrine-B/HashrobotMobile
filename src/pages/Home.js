@@ -9,7 +9,6 @@ import {
   ActivityIndicator,
 } from "react-native";
 import SubmitButton from "../components/SubmitButton";
-import TagButton from "../components/TagButton";
 import Avatar from "../components/Avatar";
 import RobotStyle from "../components/RobotStyle";
 import BackgroundSelection from "../components/BackgroundSelection";
@@ -26,9 +25,12 @@ export default function Home(props) {
     getAvatarByType,
     getRandomAvatar,
     getAvatarBackground,
+    downloadImage,
+    confirmDownload,
+    resetConfirmation
   } = props;
 
-  const [modalVisible, setModalVisible] = useState(false);
+
   const [choices] = useState([
     {
       id: 0,
@@ -54,7 +56,6 @@ export default function Home(props) {
     const itemHeight = windowHeight / 2;
 
     return (
-
       <View style={{ width: windowWidth, height: itemHeight }}>
         <View style={styles.fakeCarousel}>
           {id === 0 && (
@@ -86,9 +87,14 @@ export default function Home(props) {
           {id === 2 && (
             <BackgroundSelection getAvatarBackground={getAvatarBackground} />
           )}
-           <DownloadModal robot={robot}/>
+          <DownloadModal
+            downloadImage={downloadImage}
+            robot={robot}
+            confirmDownload={confirmDownload}
+            resetConfirmation={resetConfirmation}
+            loader={loader}
+          />
           <SubmitButton text={"Telecharger "} onPress={onPress} />
-         
         </View>
       </View>
     );
