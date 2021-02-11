@@ -1,44 +1,78 @@
 import React from "react";
-import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  ActivityIndicator,
+} from "react-native";
 import PropTypes from "prop-types";
+import { useState } from "react/cjs/react.development";
 
 export default function RobotStyle(props) {
   const { getAvatarByType } = props;
-  const isImageSelected = true;
+  const [selectedImage, setSelectedImage] = useState([
+    {
+      id: 1,
+      name: "robot",
+      display: false,
+      url: require("../../assets/generate1.png"),
+    },
+    {
+      id: 2,
+      name: "monster",
+      display: false,
+      url: require("../../assets/generate2.png"),
+    },
+    {
+      id: 3,
+      name: "compact",
+      display: false,
+      url: require("../../assets/generate3.png"),
+    },
+    {
+      id: 4,
+      name: "cat",
+      display: false,
+      url: require("../../assets/generate4.png"),
+    },
+  ]);
+
+  const handleImageSelection = (id) => {
+    getAvatarByType(id);
+    const test = selectedImage.map((item) =>
+      item.id === id ? { ...item, display: true } : { ...item, display: false }
+    );
+    setSelectedImage(test);
+  };
+
+  function Carrousel() {
+    if (selectedImage.length !== 0) {
+      return selectedImage.map((image) => {
+        return (
+          <TouchableOpacity
+            key={image.index}
+            onPress={() => handleImageSelection(image.id)}
+          >
+            <Image
+              style={
+                image.display === true ? styles.selected : styles.unselected
+              }
+              source={image.url}
+            />
+          </TouchableOpacity>
+        );
+      });
+    }
+    return (
+      <ActivityIndicator style={{ height: 200 }} size="small" color="#A2AA39" />
+    );
+  }
 
   return (
     <View style={styles.carrousel}>
-      <TouchableOpacity
-        onPress={() => getAvatarByType(1)}
-        //style={[styles.item, style]}
-      >
-        <Image
-          style={isImageSelected === true ? styles.selected : styles.unselected}
-          source={require("../../assets/generate1.png")}
-        />
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={() => getAvatarByType(2)}
-        //style={[styles.item, style]}
-      >
-        <Image
-          style={isImageSelected === true ? styles.selected : styles.unselected}
-          source={require("../../assets/generate2.png")}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => getAvatarByType(3)}>
-        <Image
-          style={isImageSelected === true ? styles.selected : styles.unselected}
-          source={require("../../assets/generate3.png")}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => getAvatarByType(4)}>
-        <Image
-          style={isImageSelected === true ? styles.selected : styles.unselected}
-          source={require("../../assets/generate4.png")}
-        />
-      </TouchableOpacity>
+      <Carrousel></Carrousel>
     </View>
   );
 }
@@ -76,3 +110,8 @@ RobotStyle.defaultProps = {
 RobotStyle.propTypes = {
   getAvatarByType: PropTypes.func.isRequired,
 };
+
+// return(
+//    <Text>{image.name}</Text>
+
+// )

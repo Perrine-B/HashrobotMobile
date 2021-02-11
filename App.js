@@ -3,7 +3,7 @@ import { StyleSheet, Switch } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import MeteorIcon from "./assets/meteor.svg";
 import MoonIcon from "./assets/moon.svg";
 import DetailedSearch from "./src/pages/DetailedSearch";
@@ -21,7 +21,6 @@ export default function App() {
     API.get("/hellocesi/?set=set4")
       .then(function (response) {
         // handle success
-
         if (response.status === 200) {
           setRobot("https://robohash.org/hellocesi/?set=set4");
           setLoader(false);
@@ -59,7 +58,7 @@ export default function App() {
   };
 
   const getAvatarByType = (id) => {
-    console.log("jeveux un", id);
+    setLoader(true);
     // générer une chaine de caractère aléatoire
     const randomChars = Math.random().toString(36).substring(7);
     API.get(`/${randomChars}/?set=set${id}`)

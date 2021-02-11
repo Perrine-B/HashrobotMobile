@@ -4,15 +4,11 @@ import {
   Text,
   View,
   SafeAreaView,
-  ScrollView,
-  Image,
   Dimensions,
-  TouchableOpacity,
-  KeyboardAvoidingView,
   Switch,
   TextInput,
   FlatList,
-  Item
+  ActivityIndicator,
 } from "react-native";
 import SubmitButton from "../components/SubmitButton";
 import TagButton from "../components/TagButton";
@@ -27,8 +23,8 @@ export default function DetailedSearch(props) {
     {
       id: 0,
       title: "Choississez un style",
-    }
-  ])
+    },
+  ]);
 
   const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
@@ -37,32 +33,40 @@ export default function DetailedSearch(props) {
     console.log("coucou");
   };
 
-
   const renderItem = ({ item }) => {
     //const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff";
 
     console.log(item);
-    const {id, title} = item;
+    const { id, title } = item;
 
     return (
       <>
-      <Text style={styles.title}> {title} </Text>
-      {id === 0 && <RobotStyle 
-      getAvatarByType={getAvatarByType}
-      ></RobotStyle>}
+        <Text style={styles.title}> {title} </Text>
+        {id === 0 && (
+          <RobotStyle getAvatarByType={getAvatarByType}></RobotStyle>
+        )}
       </>
     );
   };
 
   return (
     <SafeAreaView style={styles.screen}>
-      <ScrollView alwaysBounceVertical={true}>
-        <Avatar url={robot} />
+      <View alwaysBounceVertical={true}>
+        {!loader && robot !== "" ? (
+          <Avatar url={robot} />
+        ) : (
+          <ActivityIndicator
+            style={{ height: 200 }}
+            size="small"
+            color="#A2AA39"
+          />
+        )}
         {/** Image box */}
         <FlatList
-    data={choices}
-    renderItem={renderItem}
-    keyExtractor={item => item.id}/>
+          data={choices}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+        />
         {/** End Image box */}
         {/** Choices section */}
         <View style={styles.choicesSection}>
@@ -117,7 +121,7 @@ export default function DetailedSearch(props) {
         </View>
 
         {/** End Submit section */}
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }
@@ -138,8 +142,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   imageSection: {},
- 
- 
+
   choicesSection: {
     paddingVertical: 5,
     paddingHorizontal: 5,
@@ -171,8 +174,7 @@ const styles = StyleSheet.create({
   },
 });
 
-
 DetailedSearch.propTypes = {
   robot: PropTypes.string.isRequired,
-  loader: PropTypes.bool.isRequired
+  loader: PropTypes.bool.isRequired,
 };
