@@ -36,7 +36,7 @@ export default function Home(props) {
         {!loader && robot !== "" ? (
           <Avatar url={robot} />
         ) : (
-          <ActivityIndicator size="small" color="#0000ff" />
+          <ActivityIndicator style={{height: 200}} size="small" color="#A2AA39" />
         )}
 
         <View style={{ width: windowWidth, ...styles.buttons }}>
@@ -84,7 +84,8 @@ const styles = StyleSheet.create({
   },
 });
 
-Avatar.propTypes = {
+Home.propTypes = {
   robot: PropTypes.string.isRequired,
   getRandomAvatar: PropTypes.func.isRequired,
+  loader: PropTypes.bool.isRequired
 };

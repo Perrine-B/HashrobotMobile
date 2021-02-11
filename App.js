@@ -16,16 +16,20 @@ export default function App() {
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
+    setLoader(true);
     API.get("/hellocesi/?set=set4")
       .then(function (response) {
         // handle success
+
         if (response.status === 200) {
           setRobot("https://robohash.org/hellocesi/?set=set4");
+          setLoader(false);
         }
       })
       .catch(function (error) {
         // handle error
         console.log(error);
+        setLoader(false);
       });
   }, []);
 
@@ -36,17 +40,20 @@ export default function App() {
     const randomChars = Math.random().toString(36).substring(7);
     // générer un chiffre entre 1 & 4
     const randomSet = Math.floor(Math.random() * 4) + 1;
-
+    setLoader(true);
     API.get(`/${randomChars}/?set=set${randomSet}`)
       .then(function (response) {
         // handle success
+
         if (response.status === 200) {
           setRobot(`https://robohash.org/${randomChars}/?set=set${randomSet}`);
+          setLoader(false);
         }
       })
       .catch(function (error) {
         // handle error
         console.log(error);
+        setLoader(false);
       });
   };
 
@@ -80,12 +87,16 @@ export default function App() {
         <Tab.Screen
           name="Accueil"
           children={() => (
-            <Home robot={robot} getRandomAvatar={getRandomAvatar} loader={loader} />
+            <Home
+              robot={robot}
+              getRandomAvatar={getRandomAvatar}
+              loader={loader}
+            />
           )}
         />
         <Tab.Screen
           name="Avancé"
-          children={() => <DetailedSearch robot={robot} />}
+          children={() => <DetailedSearch robot={robot} loader={loader} />}
         />
         <Tab.Screen name="Infos" component={Info} robot={robot} />
       </Tab.Navigator>

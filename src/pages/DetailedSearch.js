@@ -15,9 +15,10 @@ import {
 import SubmitButton from "../components/SubmitButton";
 import TagButton from "../components/TagButton";
 import Avatar from "../components/Avatar";
+import PropTypes from "prop-types";
 
-export default function Article(props) {
-  const { robot } = props;
+export default function DetailedSearch(props) {
+  const { robot, loader } = props;
   const isImageSelected = useState(false);
 
   const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
@@ -182,3 +183,9 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
 });
+
+
+DetailedSearch.propTypes = {
+  robot: PropTypes.string.isRequired,
+  loader: PropTypes.bool.isRequired
+};
