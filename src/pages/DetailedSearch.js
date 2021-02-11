@@ -11,15 +11,24 @@ import {
   KeyboardAvoidingView,
   Switch,
   TextInput,
+  FlatList,
+  Item
 } from "react-native";
 import SubmitButton from "../components/SubmitButton";
 import TagButton from "../components/TagButton";
 import Avatar from "../components/Avatar";
+import RobotStyle from "../components/RobotStyle";
 import PropTypes from "prop-types";
 
 export default function DetailedSearch(props) {
-  const { robot, loader } = props;
-  const isImageSelected = useState(false);
+  const { robot, loader, getAvatarByType } = props;
+
+  const [choices, setChoices] = useState([
+    {
+      id: 0,
+      title: "Choississez un style",
+    }
+  ])
 
   const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
@@ -28,39 +37,32 @@ export default function DetailedSearch(props) {
     console.log("coucou");
   };
 
+
+  const renderItem = ({ item }) => {
+    //const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff";
+
+    console.log(item);
+    const {id, title} = item;
+
+    return (
+      <>
+      <Text style={styles.title}> {title} </Text>
+      {id === 0 && <RobotStyle 
+      getAvatarByType={getAvatarByType}
+      ></RobotStyle>}
+      </>
+    );
+  };
+
   return (
     <SafeAreaView style={styles.screen}>
       <ScrollView alwaysBounceVertical={true}>
         <Avatar url={robot} />
         {/** Image box */}
-        <View style={styles.imageSection}></View>
-        <Text style={styles.title}>Choisissez un style</Text>
-        <View style={styles.carroussel}>
-          <Image
-            style={
-              isImageSelected === true ? styles.selected : styles.unselected
-            }
-            source={require("../../assets/generate1.png")}
-          />
-          <Image
-            style={
-              isImageSelected === true ? styles.selected : styles.unselected
-            }
-            source={require("../../assets/generate2.png")}
-          />
-          <Image
-            style={
-              isImageSelected === true ? styles.selected : styles.unselected
-            }
-            source={require("../../assets/generate3.png")}
-          />
-          <Image
-            style={
-              isImageSelected === true ? styles.selected : styles.unselected
-            }
-            source={require("../../assets/generate4.png")}
-          />
-        </View>
+        <FlatList
+    data={choices}
+    renderItem={renderItem}
+    keyExtractor={item => item.id}/>
         {/** End Image box */}
         {/** Choices section */}
         <View style={styles.choicesSection}>
@@ -136,23 +138,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   imageSection: {},
-  carroussel: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  // Styles applied when images are selected
-  selected: {
-    backgroundColor: "grey",
-    margin: 8,
-  },
-  unselected: {
-    backgroundColor: "#EBEEE7",
-    margin: 8,
-    borderColor: "black",
-    borderWidth: 1,
-  },
+ 
+ 
   choicesSection: {
     paddingVertical: 5,
     paddingHorizontal: 5,

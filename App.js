@@ -57,6 +57,26 @@ export default function App() {
       });
   };
 
+  const getAvatarByType = (id) => {
+    console.log("jeveux un", id);
+    // générer une chaine de caractère aléatoire
+    const randomChars = Math.random().toString(36).substring(7);
+    API.get(`/${randomChars}/?set=set${id}`)
+      .then(function (response) {
+        // handle success
+
+        if (response.status === 200) {
+          setRobot(`https://robohash.org/${randomChars}/?set=set${id}`);
+          setLoader(false);
+        }
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+        setLoader(false);
+      });
+  };
+
   return (
     <NavigationContainer>
       <StatusBar style="auto" />
@@ -75,7 +95,7 @@ export default function App() {
         })}
         tabBarOptions={{
           labelPosition: "beside-icon",
-          activeBackgroundColor: "black",
+          activeBackgroundColor: "#A2AA39",
           activeTintColor: "white",
           inactiveTintColor: "#4d4f4d",
           labelStyle: {
@@ -96,7 +116,13 @@ export default function App() {
         />
         <Tab.Screen
           name="Avancé"
-          children={() => <DetailedSearch robot={robot} loader={loader} />}
+          children={() => (
+            <DetailedSearch
+              robot={robot}
+              loader={loader}
+              getAvatarByType={getAvatarByType}
+            />
+          )}
         />
         <Tab.Screen name="Infos" component={Info} robot={robot} />
       </Tab.Navigator>
