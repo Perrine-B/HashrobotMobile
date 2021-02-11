@@ -1,14 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   View,
   Image,
   StyleSheet,
   TouchableOpacity,
-  Text,
   ActivityIndicator,
+  Dimensions
 } from "react-native";
 import PropTypes from "prop-types";
-import { useState } from "react/cjs/react.development";
 
 export default function RobotStyle(props) {
   const { getAvatarByType } = props;
@@ -38,6 +37,8 @@ export default function RobotStyle(props) {
       url: require("../../assets/generate4.png"),
     },
   ]);
+
+  const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
   const handleImageSelection = (id) => {
     getAvatarByType(id);
@@ -71,7 +72,7 @@ export default function RobotStyle(props) {
   }
 
   return (
-    <View style={styles.carrousel}>
+    <View style={{width: windowWidth, ...styles.carrousel}}>
       <Carrousel></Carrousel>
     </View>
   );
@@ -84,21 +85,21 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 50,
+    //paddingHorizontal: 10,
   },
   selected: {
     backgroundColor: "grey",
     margin: 8,
-    width: 100,
-    height: 100,
+    width: 70,
+    height: 70,
   },
   unselected: {
     backgroundColor: "#EBEEE7",
     margin: 8,
     borderColor: "black",
     borderWidth: 1,
-    width: 100,
-    height: 100,
+    width: 70,
+    height: 70,
   },
 });
 
@@ -110,8 +111,3 @@ RobotStyle.defaultProps = {
 RobotStyle.propTypes = {
   getAvatarByType: PropTypes.func.isRequired,
 };
-
-// return(
-//    <Text>{image.name}</Text>
-
-// )

@@ -6,7 +6,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import MeteorIcon from "./assets/meteor.svg";
 import MoonIcon from "./assets/moon.svg";
-import DetailedSearch from "./src/pages/DetailedSearch";
 import API from "./src/utils/api";
 import Home from "./src/pages/Home";
 import Info from "./src/pages/Info";
@@ -36,6 +35,7 @@ export default function App() {
   // Method - Handle change of robots
 
   const getRandomAvatar = () => {
+    console.log('clicked');
     // générer une chaine de caractère aléatoire
     const randomChars = Math.random().toString(36).substring(7);
     // générer un chiffre entre 1 & 4
@@ -78,8 +78,26 @@ export default function App() {
   };
 
   const getAvatarBackground = () => {
-    
-  }
+    setLoader(true);
+    console.log(robot)
+    const newRobot = robot.slice(20);
+    console.log(newRobot)
+    API.get(`/${newRobot}/?bgset=bg1`)
+    .then(function (response) {
+      // handle success
+
+      if (response.status === 200) {
+        setRobot(`https://robohash.org/${newRobot}/?bgset=bg1`);
+        setLoader(false);
+      }
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+      setLoader(false);
+    });
+
+  } 
 
   return (
     <NavigationContainer>
@@ -116,20 +134,13 @@ export default function App() {
               robot={robot}
               getRandomAvatar={getRandomAvatar}
               loader={loader}
-            />
-          )}
-        />
-        <Tab.Screen
-          name="Avancé"
-          children={() => (
-            <DetailedSearch
-              robot={robot}
-              loader={loader}
               getAvatarByType={getAvatarByType}
+              getAvatarBackground={getAvatarBackground}
             />
           )}
         />
-        <Tab.Screen name="Download" component={Info} robot={robot} />
+      
+        <Tab.Screen name="Infos" component={Info} robot={robot} />
       </Tab.Navigator>
     </NavigationContainer>
   );

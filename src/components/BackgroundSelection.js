@@ -12,9 +12,15 @@ import PropTypes from "prop-types";
 import SubmitButton from "../components/SubmitButton";
 
 export default function BackgroundSelection(props) {
-  const { getAvatarByType } = props;
+  const { getAvatarBackground } = props;
   const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const toggleSwitch = () => {
+    if(!isEnabled){
+        getAvatarBackground()
+    }
+    setIsEnabled((previousState) => !previousState);
+  };
+
   const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
   const handleImageSelection = (id) => {
@@ -28,7 +34,7 @@ export default function BackgroundSelection(props) {
   const sectionHeight = windowHeight / 3;
 
   return (
-    <View style={{ height: sectionHeight, ...styles.switchSection }}>
+    <View style={{ height: sectionHeight }}>
       <View style={styles.switch}>
         <Text style={styles.text}>Activer Background</Text>
         <Switch
@@ -39,19 +45,11 @@ export default function BackgroundSelection(props) {
           value={isEnabled}
         />
       </View>
-      <SubmitButton
-        text={"Telecharger"}
-        //onPress={getRandomAvatar}
-      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  switchSection: {
-    flexDirection: "column",
-    justifyContent: "space-around",
-  },
   switch: {
     flexDirection: "row",
     marginTop: 20,
