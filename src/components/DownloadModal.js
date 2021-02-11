@@ -19,11 +19,60 @@ export default function DownloadModal(props) {
     loader,
   } = props;
   const [modalVisible, setModalVisible] = useState(false);
-  const [isFileDownloaded, setIsFileDownloaded] = useState("");
+  const [isFileDownloaded, setIsFileDownloaded] = useState(false);
+
+  useEffect(() => {
+    console.log("download", confirmDownload);
+
+    if (confirmDownload === true){
+      setIsFileDownloaded(true)
+    }
+    setIsFileDownloaded(false)
+  }, [confirmDownload]);
 
   const handleDownload = () => {
     downloadImage();
+    setIsFileDownloaded(true)
+
   };
+
+  const resetProcess = () => {
+    setIsFileDownloaded(false);
+    setModalVisible(!modalVisible)
+  }
+
+  const classic = (
+    <>
+      <Pressable
+        style={[styles.button, styles.buttonClose]}
+        onPress={() => setModalVisible(!modalVisible)}
+      >
+        <Text style={styles.textStyle}>Annuler</Text>
+      </Pressable>
+      <Pressable
+        style={[styles.button, styles.buttonConfirm]}
+        onPress={() => handleDownload()}
+      >
+        <Text style={styles.textStyle}>Confirmer</Text>
+      </Pressable>
+    </>
+  );
+
+  const spinner = (
+    <ActivityIndicator style={{ height: 200 }} size="small" color="#A2AA39" />
+  );
+
+  const confirmationButton = (
+    <>
+      <Text style={styles.textStyle}>Telecharchement terminé</Text>
+      <Pressable
+        style={[styles.button, styles.buttonClose]}
+        onPress={() => resetProcess()}
+      >
+        <Text style={styles.textStyle}>Quitter</Text>
+      </Pressable>
+    </>
+  );
 
   return (
     <View style={styles.centeredView}>
@@ -37,48 +86,13 @@ export default function DownloadModal(props) {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Télécharger l'avatar ?</Text>
-            <Avatar style={styles.avatar} url={robot} format={70}></Avatar>
-
-            {!loader ? (
-              <View style={styles.buttonSection}>
-                <Pressable
-                  style={[styles.button, styles.buttonClose]}
-                  onPress={() => setModalVisible(!modalVisible)}
-                >
-                  <Text style={styles.textStyle}>Annuler</Text>
-                </Pressable>
-                <Pressable
-                  style={[styles.button, styles.buttonConfirm]}
-                  onPress={() => handleDownload()}
-                >
-                  <Text style={styles.textStyle}>Confirmer</Text>
-                </Pressable>
-              </View>
-            ) : (
-              <ActivityIndicator
-                style={{ height: 200 }}
-                size="small"
-                color="#A2AA39"
-              />
-            )}
-            {isFileDownloaded ? (
-              <View style={styles.buttonSection}>
-                <Text style={styles.textStyle}>Telecharchement terminé</Text>
-                <Pressable
-                  style={[styles.button, styles.buttonClose]}
-                  onPress={() => setModalVisible(!modalVisible)}
-                >
-                  <Text style={styles.textStyle}>Annuler</Text>
-                </Pressable>
-              </View>
-            ) : (
-              <ActivityIndicator
-                style={{ height: 200 }}
-                size="small"
-                color="#A2AA39"
-              />
-            )}
+          {isFileDownloaded && !loader ? <Text style={styles.modalText}>Avatar téléchargé !</Text> : <Text style={styles.modalText}>Télécharger l'avatar ?</Text>} 
+            {!loader && robot !== "" ? (
+            <Avatar url={robot} format={80} />
+          ) : (
+            spinner
+          )}
+            <View style={styles.buttonSection}>{isFileDownloaded && !loader ? confirmationButton : classic}</View>
           </View>
         </View>
       </Modal>
