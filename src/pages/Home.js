@@ -17,10 +17,18 @@ import PropTypes from "prop-types";
 import CircleSolid from "../../assets/circle-solid.svg";
 import Circle from "../../assets/circle-regular.svg";
 import RandomSelection from "../components/RandomSelection";
+import DownloadModal from "../components/DownloadModal";
 
 export default function Home(props) {
-  const { robot, loader, getAvatarByType, getRandomAvatar, getAvatarBackground } = props;
+  const {
+    robot,
+    loader,
+    getAvatarByType,
+    getRandomAvatar,
+    getAvatarBackground,
+  } = props;
 
+  const [modalVisible, setModalVisible] = useState(false);
   const [choices] = useState([
     {
       id: 0,
@@ -46,6 +54,7 @@ export default function Home(props) {
     const itemHeight = windowHeight / 2;
 
     return (
+
       <View style={{ width: windowWidth, height: itemHeight }}>
         <View style={styles.fakeCarousel}>
           {id === 0 && (
@@ -72,13 +81,14 @@ export default function Home(props) {
           {id === 1 && (
             <View>
               <RobotStyle getAvatarByType={getAvatarByType} />
-             
             </View>
           )}
           {id === 2 && (
             <BackgroundSelection getAvatarBackground={getAvatarBackground} />
           )}
-        <SubmitButton text={"Telecharger "} />
+           <DownloadModal robot={robot}/>
+          <SubmitButton text={"Telecharger "} onPress={onPress} />
+         
         </View>
       </View>
     );
@@ -162,4 +172,3 @@ Home.propTypes = {
   getRandomAvatar: PropTypes.func.isRequired,
   getAvatarByType: PropTypes.func.isRequired,
 };
-
