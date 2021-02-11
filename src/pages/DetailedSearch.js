@@ -5,7 +5,6 @@ import {
   View,
   SafeAreaView,
   Dimensions,
-  Switch,
   TextInput,
   FlatList,
   ActivityIndicator,
@@ -14,7 +13,10 @@ import SubmitButton from "../components/SubmitButton";
 import TagButton from "../components/TagButton";
 import Avatar from "../components/Avatar";
 import RobotStyle from "../components/RobotStyle";
+import BackgroundSelection from "../components/BackgroundSelection";
 import PropTypes from "prop-types";
+import CircleSolid from "../../assets/circle-solid.svg";
+import Circle from "../../assets/circle-regular.svg";
 
 export default function DetailedSearch(props) {
   const { robot, loader, getAvatarByType } = props;
@@ -23,6 +25,10 @@ export default function DetailedSearch(props) {
     {
       id: 0,
       title: "Choississez un style",
+    },
+    {
+      id: 1,
+      title: "Choissisez un background",
     },
   ]);
 
@@ -33,19 +39,42 @@ export default function DetailedSearch(props) {
     console.log("coucou");
   };
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item, index, separators }) => {
     //const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff";
 
-    console.log(item);
+    console.log(separators);
     const { id, title } = item;
+    const itemHeight = windowHeight / 2;
 
     return (
-      <>
-        <Text style={styles.title}> {title} </Text>
-        {id === 0 && (
-          <RobotStyle getAvatarByType={getAvatarByType}></RobotStyle>
-        )}
-      </>
+      <View style={{ width: windowWidth, height: itemHeight }}>
+        <View style={{ width: windowWidth, height: itemHeight }}>
+          <Text style={styles.title}> {title} </Text>
+
+          <View style={styles.fakeCarousel}>
+            {id === 0 && (
+              <View style={styles.toRework}>
+                <CircleSolid
+                  style={{ color: "#A2AA39", width: 10, height: 10 }}
+                />
+                <Circle style={{ color: "#A2AA39", width: 10, height: 10 }} />
+              </View>
+            )}
+               {id === 1 && (
+              <View style={styles.toRework}>
+                <Circle style={{ color: "#A2AA39", width: 10, height: 10 }} />
+                <CircleSolid
+                  style={{ color: "#A2AA39", width: 10, height: 10 }}
+                />
+              </View>
+            )}
+          </View>
+          {id === 0 && <RobotStyle getAvatarByType={getAvatarByType} />}
+          {id === 1 && (
+            <BackgroundSelection getAvatarByType={getAvatarByType} />
+          )}
+        </View>
+      </View>
     );
   };
 
@@ -65,7 +94,8 @@ export default function DetailedSearch(props) {
         <FlatList
           data={choices}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id.toString()}
+          horizontal
         />
         {/** End Image box */}
         {/** Choices section */}
@@ -78,21 +108,6 @@ export default function DetailedSearch(props) {
               <TagButton text={"200"} onPress={onPress} />
               <TagButton text={"300"} onPress={onPress} />
               <TagButton text={"500"} onPress={onPress} />
-            </View>
-          </View>
-
-          <View style={styles.choice}>
-            <Text style={{ ...styles.title, ...styles.choiceTitle }}>
-              Background aléatoire
-            </Text>
-            <View style={styles.buttons}>
-              <Switch
-                trackColor={{ false: "#CBD4C2", true: "#212922" }}
-                thumbColor={true ? "#212922" : "#CBD4C2"}
-                ios_backgroundColor="#3e3e3e"
-                //onValueChange={toggleSwitch}
-                //value={isEnabled}
-              />
             </View>
           </View>
 
@@ -141,24 +156,16 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 20,
   },
-  imageSection: {},
-
-  choicesSection: {
+  fakeCarousel: {
     paddingVertical: 5,
-    paddingHorizontal: 5,
-  },
-  choice: {
     flexDirection: "row",
-    marginTop: 20,
+    justifyContent: "center",
     alignItems: "center",
-    justifyContent: "space-between",
   },
-  choiceTitle: {
-    justifyContent: "flex-start",
-  },
-  buttons: {
+  toRework:{
     flexDirection: "row",
   },
+
   submitSection: {
     marginTop: 20,
     justifyContent: "center",

@@ -77,10 +77,15 @@ export default function App() {
       });
   };
 
+  const getAvatarBackground = () => {
+    
+  }
+
   return (
     <NavigationContainer>
       <StatusBar style="auto" />
       <Tab.Navigator
+      swipeEnabled={false}
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused }) => {
             if (route.name === "Accueil") {
@@ -124,7 +129,7 @@ export default function App() {
             />
           )}
         />
-        <Tab.Screen name="Infos" component={Info} robot={robot} />
+        <Tab.Screen name="Download" component={Info} robot={robot} />
       </Tab.Navigator>
     </NavigationContainer>
   );
