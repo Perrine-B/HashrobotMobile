@@ -142,14 +142,15 @@ export default function App() {
       <Tab.Navigator
         swipeEnabled={false}
         tabBarOptions={{
-          labelPosition: "beside-icon",
-          activeBackgroundColor: "#A2AA39",
-          activeTintColor: "white",
+          activeTintColor: "#4d4f4d",
           inactiveTintColor: "#4d4f4d",
           labelStyle: {
             fontSize: 12,
-            paddingVertical: 10,
+            paddingTop: 30,
           },
+          indicatorStyle:{
+            backgroundColor: '#A2AA39'
+          }
         }}
       >
         <Tab.Screen

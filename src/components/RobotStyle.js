@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center",
-    //paddingHorizontal: 10,
+
   },
   selected: {
     backgroundColor: "grey",

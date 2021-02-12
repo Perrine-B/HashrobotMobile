@@ -27,9 +27,10 @@ export default function Home(props) {
     getAvatarBackground,
     downloadImage,
     confirmDownload,
-    resetConfirmation
+    resetConfirmation,
   } = props;
 
+  const  [fullCircle, setFullCircle ] = useState(true);
 
   const [choices] = useState([
     {
@@ -53,28 +54,10 @@ export default function Home(props) {
     //const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff";
 
     const { id, title } = item;
-    const itemHeight = windowHeight / 2;
+    const itemHeight = windowHeight / 2.2;
 
     return (
       <View style={{ width: windowWidth, height: itemHeight }}>
-        <View style={styles.fakeCarousel}>
-          {id === 0 && (
-            <View style={styles.toRework}>
-              <CircleSolid
-                style={{ color: "#A2AA39", width: 10, height: 10 }}
-              />
-              <Circle style={{ color: "#A2AA39", width: 10, height: 10 }} />
-            </View>
-          )}
-          {id === 1 && (
-            <View style={styles.toRework}>
-              <Circle style={{ color: "#A2AA39", width: 10, height: 10 }} />
-              <CircleSolid
-                style={{ color: "#A2AA39", width: 10, height: 10 }}
-              />
-            </View>
-          )}
-        </View>
         <View style={{ width: windowWidth, height: itemHeight }}>
           <Text style={styles.title}> {title} </Text>
 
@@ -123,9 +106,26 @@ export default function Home(props) {
             />
           )}
         </View>
+        <View style={styles.fakeCarousel}>
+          <View style={styles.toRework}>
+            {!fullCircle ? (
+              <CircleSolid
+                style={{ color: "#A2AA39", width: 10, height: 10 }}
+              />) : (
+              <Circle style={{ color: "#A2AA39", width: 10, height: 10 }} />
+            )}
+            {fullCircle ? (
+              <CircleSolid
+                style={{ color: "#A2AA39", width: 10, height: 10 }}
+              />) : (
+              <Circle style={{ color: "#A2AA39", width: 10, height: 10 }} />
+            )}
+          </View>
+        </View>
         <View style={{ height: midHeight }} alwaysBounceVertical={true}>
           {/** Image box */}
           <FlatList
+            style={styles.flatlist}
             data={choices}
             renderItem={renderItem}
             keyExtractor={(item) => item.id.toString()}
@@ -135,6 +135,7 @@ export default function Home(props) {
               offset: windowHeight * index,
               index,
             })}
+            onEndReached={() => setFullCircle(!fullCircle)}
           />
         </View>
       </View>
@@ -169,6 +170,23 @@ const styles = StyleSheet.create({
   },
   toRework: {
     flexDirection: "row",
+  },
+  flatlist: {
+    paddingTop: 10,
+    shadowColor: "#0E6BA8",
+    shadowOffset: {
+      width: 1,
+      height: 20,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 5.65,
+    elevation: 1,
+    //   width: 1,
+    //   top: 0,
+    //   bottom: "50%",
+    //   left: 0,
+    //   backgroundColor: "blue",
+    //   overflow: "hidden",
   },
 });
 

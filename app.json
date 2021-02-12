@@ -24,7 +24,7 @@
         "foregroundImage": "./assets/favicon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "permissions" : ["WRITE_EXTERNAL_STORAGE"]
+      "permissions" : ["WRITE_EXTERNAL_STORAGE", "VIBRATE"]
     },
     "web": {
       "favicon": "./assets/favicon.png"

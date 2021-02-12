@@ -93,12 +93,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: "100%",
     backgroundColor: "white",
+    paddingHorizontal: 20
   },
   title: {
-    color: "black",
-    fontSize: 18,
+    color: "#0E6BA8",
+    fontSize: 20,
     fontWeight: "bold",
-    paddingVertical: 20,
+    textAlign: "center",
+    paddingBottom: 20,
+    paddingTop: 20
   },
   text: {
     color: "#815355",
