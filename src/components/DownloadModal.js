@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import {
-  Alert,
   Modal,
   StyleSheet,
   Text,
   Pressable,
   View,
   ActivityIndicator,
+  Vibration,
 } from "react-native";
 import Avatar from "../components/Avatar";
 
@@ -19,27 +19,31 @@ export default function DownloadModal(props) {
     loader,
   } = props;
   const [modalVisible, setModalVisible] = useState(false);
-  const [isFileDownloaded, setIsFileDownloaded] = useState(false);
+  const [isFileDownloaded, setIsFileDownloaded] = useState("");
 
   useEffect(() => {
-    console.log("download", confirmDownload);
+    console.log("comp init", confirmDownload);
+    const ONE_SECOND_IN_MS = 1000;
+    if (confirmDownload === true) {
+      setIsFileDownloaded(true);
+      Vibration.vibrate(ONE_SECOND_IN_MS);
+    } else {
 
-    if (confirmDownload === true){
-      setIsFileDownloaded(true)
+      setIsFileDownloaded(false);
     }
-    setIsFileDownloaded(false)
   }, [confirmDownload]);
 
-  const handleDownload = () => {
-    downloadImage();
-    setIsFileDownloaded(true)
-
+  const handleDownload = async() => {
+    await downloadImage();
+    console.log("download", confirmDownload);
+    await setIsFileDownloaded(true);
   };
 
   const resetProcess = () => {
     setIsFileDownloaded(false);
-    setModalVisible(!modalVisible)
-  }
+    setModalVisible(!modalVisible);
+    resetConfirmation();
+  };
 
   const classic = (
     <>
@@ -64,7 +68,7 @@ export default function DownloadModal(props) {
 
   const confirmationButton = (
     <>
-      <Text style={styles.textStyle}>Telecharchement terminé</Text>
+      <Text style={styles.textStyle}>Telechargement terminé</Text>
       <Pressable
         style={[styles.button, styles.buttonClose]}
         onPress={() => resetProcess()}
@@ -86,13 +90,19 @@ export default function DownloadModal(props) {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-          {isFileDownloaded && !loader ? <Text style={styles.modalText}>Avatar téléchargé !</Text> : <Text style={styles.modalText}>Télécharger l'avatar ?</Text>} 
+            {isFileDownloaded && !loader ? (
+              <Text style={styles.modalText}>Avatar téléchargé !</Text>
+            ) : (
+              <Text style={styles.modalText}>Télécharger l'avatar ?</Text>
+            )}
             {!loader && robot !== "" ? (
-            <Avatar url={robot} format={80} />
-          ) : (
-            spinner
-          )}
-            <View style={styles.buttonSection}>{isFileDownloaded && !loader ? confirmationButton : classic}</View>
+              <Avatar url={robot} format={80} />
+            ) : (
+              spinner
+            )}
+            <View style={styles.buttonSection}>
+              {isFileDownloaded && !loader ? confirmationButton : classic}
+            </View>
           </View>
         </View>
       </Modal>
