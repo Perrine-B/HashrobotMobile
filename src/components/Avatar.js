@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 
 export default function Avatar(props) {
@@ -12,12 +12,16 @@ export default function Avatar(props) {
 
   return (
     <View>
-      <Image source={image} />
+      <Image style={styles.avatar} source={image} />
     </View>
   );
 }
 
-// const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  avatar: {
+    backgroundColor: 'black'
+  }
+});
 
 Avatar.defaultProps = {
   source: "",

@@ -54,7 +54,7 @@ export default function Home(props) {
     //const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff";
 
     const { id, title } = item;
-    const itemHeight = windowHeight / 2.2;
+    const itemHeight = windowHeight / 2.4;
 
     return (
       <View style={{ width: windowWidth, height: itemHeight }}>
@@ -167,26 +167,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    paddingBottom: 10
   },
   toRework: {
     flexDirection: "row",
+    width: 23,
+    justifyContent: 'space-between'
   },
   flatlist: {
+    backgroundColor: '#EBF0F1',
     paddingTop: 10,
-    shadowColor: "#0E6BA8",
-    shadowOffset: {
-      width: 1,
-      height: 20,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 5.65,
-    elevation: 1,
-    //   width: 1,
-    //   top: 0,
-    //   bottom: "50%",
-    //   left: 0,
-    //   backgroundColor: "blue",
-    //   overflow: "hidden",
+
   },
 });
 

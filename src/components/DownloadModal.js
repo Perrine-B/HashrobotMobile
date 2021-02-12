@@ -22,20 +22,17 @@ export default function DownloadModal(props) {
   const [isFileDownloaded, setIsFileDownloaded] = useState("");
 
   useEffect(() => {
-    console.log("comp init", confirmDownload);
     const ONE_SECOND_IN_MS = 1000;
     if (confirmDownload === true) {
       setIsFileDownloaded(true);
       Vibration.vibrate(ONE_SECOND_IN_MS);
     } else {
-
       setIsFileDownloaded(false);
     }
   }, [confirmDownload]);
 
-  const handleDownload = async() => {
+  const handleDownload = async () => {
     await downloadImage();
-    console.log("download", confirmDownload);
     await setIsFileDownloaded(true);
   };
 
